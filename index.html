@@ -332,7 +332,6 @@
             const advancedToggle = document.getElementById('advanced-toggle');
             const advancedOptions = document.getElementById('advanced-options');
 
-            // --- 1. Dynamic Placeholder Text ---
             const placeholders = [
                 "A story about a kind elephant in a jungle...",
                 "A magical tale about a floating city in the clouds...",
@@ -345,9 +344,8 @@
             setInterval(() => {
                 placeholderIndex = (placeholderIndex + 1) % placeholders.length;
                 promptInput.placeholder = placeholders[placeholderIndex];
-            }, 5000); // Change every 5 seconds
+            }, 5000);
 
-            // --- 2. Dynamic Title Animation ---
             const titles = ['ChitraKatha', 'चित्रकथा', 'ಚಿತ್ರಕಥೆ', 'ਕਾਰਟੂਨ ਕਹਾਣੀ'];
             let titleIndex = 0;
             function changeTitle() {
@@ -363,23 +361,19 @@
             }
             setTimeout(changeTitle, 1500);
 
-            // --- 3. Advanced Options Toggle ---
             advancedToggle.addEventListener('click', () => {
                 const isHidden = advancedOptions.style.display === 'none';
                 advancedOptions.style.display = isHidden ? 'flex' : 'none';
                 advancedToggle.textContent = isHidden ? 'Advanced Options ▲' : 'Advanced Options ▼';
             });
 
-            // --- 4. Button Click and Scrolling ---
             startBtn.addEventListener('click', () => {
                 const prompt = promptInput.value;
                 const language = document.getElementById('lang-select').value;
                 let tone = document.getElementById('tone-select').value;
-                
                 if (tone === 'Default') {
-                    tone = null; // Send null if default is selected
+                    tone = null;
                 }
-
                 if (!prompt) { alert('Please enter a story idea.'); return; }
                 outputSection.style.display = 'flex';
                 outputSection.scrollIntoView({ behavior: 'smooth' });
@@ -389,13 +383,17 @@
             function submitPrompt(prompt, language, tone) {
                 const videoPlayer = document.getElementById('video-player');
                 const storyTextDiv = document.getElementById('story-text');
-                storyTextDiv.textContent = 'Connecting to the model... Please wait. This may take a few minutes.';
+                
+                storyTextDiv.textContent = 'Connecting to the AI... Please wait. This may take a few minutes.';
                 videoPlayer.src = '';
                 startBtn.disabled = true;
                 startBtn.textContent = 'Crafting...';
 
-                const gradio_api_base_url = 'https://43ddc3b7dd6c704596.gradio.live/';
+                // --- IMPORTANT: PASTE YOUR GRADIO SHARE LINK HERE ---
+                const gradio_api_base_url = 'https://701ac7abe9a3cada7a.gradio.live'; 
 
+                // --- UPDATED: The faulty error check has been removed ---
+                
                 fetch(`${gradio_api_base_url}/api/generate_story`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -420,6 +418,6 @@
         });
     </script>
 </body>
-
 </html>
+
 
